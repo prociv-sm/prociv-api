@@ -10,6 +10,7 @@ import { RolesGuard } from '../v1/roles/guards/roles.guard';
 import { Alert } from '../v1/alerts/schemas/alert.entity';
 import { Chat } from '../v1/chats/schemas/chat.entity';
 import { Activity } from '../v1/activities/schemas/activity.entity';
+import { Squad } from '../v1/squads/schemas/squad.entity';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { Activity } from '../v1/activities/schemas/activity.entity';
       username: process.env.DATABASE_USERNAME || 'postgres',
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME || 'prociv',
-      entities: [Sector, Alert, Chat, Activity],
+      entities: [Sector, Alert, Chat, Activity, Squad],
       synchronize: true,
     }),
     V1Module,

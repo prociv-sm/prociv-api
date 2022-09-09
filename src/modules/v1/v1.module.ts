@@ -7,6 +7,7 @@ import { ChatsModule } from './chats/chats.module';
 import { UsersModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ActivitiesModule } from './activities/activities.module';
+import { SquadsModule } from './squads/squads.module';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
       { path: '/chats', module: ChatsModule },
       { path: '/auth', module: AuthModule },
       { path: '/activities', module: ActivitiesModule },
+      { path: '/squads', module: SquadsModule },
     ],
   },
 ];
@@ -31,6 +33,7 @@ const routes: Routes = [
     SectorsModule,
     ChatsModule,
     ActivitiesModule,
+    SquadsModule,
   ],
 })
 export default class V1Module {}
