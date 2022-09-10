@@ -26,7 +26,7 @@ async function bootstrap() {
   app.enableCors();
   app.use(helmet());
 
-  const appPort = configService.get<number>('APP_PORT', 3000);
+  const appPort = configService.get<number>('APP_PORT', 8080);
   await app.listen(appPort);
 
   Logger.log('App is running and is listening at: http://localhost:' + appPort);

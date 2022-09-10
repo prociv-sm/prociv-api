@@ -26,7 +26,13 @@ export class ActivitiesController {
     this.logger.log(
       `Request activities with: ${JSON.stringify(request.query)}`,
     );
-    return this.activitiesService.findAll();
+    return this.activitiesService.findAll(request.query.take);
+  }
+
+  @Get('/statistics')
+  async statistics(@Request() request): Promise<any> {
+    this.logger.log(`Request to get statistics`);
+    return await this.activitiesService.statistics();
   }
 
   @UseGuards(JwtAuthGuard)

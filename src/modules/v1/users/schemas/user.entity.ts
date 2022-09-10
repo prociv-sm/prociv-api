@@ -1,7 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { Role } from '../../../enums/role.enum';
-import { InternalRole } from '../../../enums/internal.enum';
 
 @Entity('users')
 export default class UserEntity {
@@ -19,10 +17,8 @@ export default class UserEntity {
   readonly email: string = '';
 
   @Column()
-  role: Role;
-
-  @Column()
-  internalRole: InternalRole;
+  @Index({ unique: true })
+  username: string;
 
   @ApiProperty({ type: Boolean })
   @Column()

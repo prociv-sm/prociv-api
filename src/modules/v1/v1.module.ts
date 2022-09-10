@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@nestjs/core';
 import { AlertsModule } from './alerts/alerts.module';
 import { SectorsModule } from './sector/sectors.module';
 import { ChatsModule } from './chats/chats.module';
-import { UsersModule } from './users/user.module';
+import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ActivitiesModule } from './activities/activities.module';
 import { SquadsModule } from './squads/squads.module';

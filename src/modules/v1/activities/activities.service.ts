@@ -11,8 +11,10 @@ export class ActivitiesService {
     private activityRepository: Repository<Activity>,
   ) {}
 
-  findAll(): Promise<Activity[]> {
-    return this.activityRepository.find();
+  findAll(take): Promise<Activity[]> {
+    return this.activityRepository.find({
+      take: take ? take : 100,
+    });
   }
 
   async create(data: CreateActivityDto): Promise<Activity> {
@@ -23,5 +25,13 @@ export class ActivitiesService {
 
   deleteOne(id: string): Promise<any> {
     return this.activityRepository.delete(id);
+  }
+
+  statistics(): Promise<any> {
+    return this.activityRepository.query(`
+      SELECT type, COUNT(*) as count
+      FROM activity
+      GROUP BY type
+    `);
   }
 }
