@@ -7,6 +7,15 @@ export default class UserEntity {
   @PrimaryGeneratedColumn()
   readonly id: number = 1;
 
+  @Column()
+  name: string;
+
+  @Column()
+  surname: string;
+
+  @Column({ nullable: true })
+  internal: string;
+
   @ApiProperty({ type: String, maxLength: 64 })
   @Column({ length: 64 })
   readonly password: string = '';

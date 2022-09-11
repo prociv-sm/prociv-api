@@ -27,7 +27,19 @@ export class AuthController {
   @Post('login')
   async login(@Request() req) {
     this.logger.log(`Find user with username: ${req.body.username}`);
-    return this.authService.login(req.user);
+    const token = await this.authService.login(req.user);
+    return {
+      access_token: token.access_token,
+      user: {
+        username: req.user.username,
+        email: req.user.email,
+        name: req.user.name,
+        surname: req.user.surname,
+        internal: req.user.internal,
+        verified: req.user.verified,
+        id: req.user.id,
+      },
+    };
   }
 
   @UseGuards(JwtAuthGuard)
