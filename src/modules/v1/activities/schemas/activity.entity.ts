@@ -14,6 +14,9 @@ export class Activity extends BaseEntity {
   @Column()
   type: string;
 
+  @Column({ nullable: true })
+  location: string;
+
   @Column()
   startDate: Date;
 

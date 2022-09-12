@@ -14,6 +14,13 @@ export class CreateActivityDto {
   description: string;
 
   @ApiProperty({
+    description: 'Activity location',
+    example: "Luogo dell'attività",
+    required: false,
+  })
+  location: string;
+
+  @ApiProperty({
     description: 'Type of activities from enum',
     example: 'rescue',
   })
