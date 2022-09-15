@@ -16,4 +16,15 @@ export class AlertsController {
     );
     return await this.alertsService.findAll();
   }
+
+  @Get('/:location/:type')
+  async findByLocationAndType(@Request() request): Promise<Alert[]> {
+    this.logger.log(
+      `Request alerts for location ${request.params.location} and type ${request.params.type}`,
+    );
+    return await this.alertsService.findByLocationAndType(
+      request.params.location,
+      request.params.type,
+    );
+  }
 }

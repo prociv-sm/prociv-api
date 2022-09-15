@@ -32,6 +32,15 @@ export class AlertsService {
     });
   }
 
+  findByLocationAndType(location: string, type: string): Promise<Alert[]> {
+    return this.alertRepository.find({
+      where: {
+        location_code: location,
+        type: type,
+      },
+    });
+  }
+
   remove(id: string): Promise<any> {
     return this.alertRepository.delete(id);
   }
