@@ -32,8 +32,8 @@ export class AlertsService {
     });
   }
 
-  findByLocationAndType(location: string, type: string): Promise<Alert[]> {
-    return this.alertRepository.find({
+  findByLocationAndType(location: string, type: string): Promise<Alert | null> {
+    return this.alertRepository.findOne({
       where: {
         location_code: location,
         type: type,
