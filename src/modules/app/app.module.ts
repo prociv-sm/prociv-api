@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -14,15 +14,19 @@ import { RolesGuard } from '../v1/roles/guards/roles.guard';
       cache: true,
       validationSchema: configValidationSchema,
     }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DATABASE_HOST || 'localhost',
-      port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
-      username: process.env.DATABASE_USERNAME || 'postgres',
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME || 'prociv',
-      entities: ['dist/**/*.entity{.ts,.js}'],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('DATABASE_HOST'),
+        port: configService.get('DATABASE_PORT'),
+        username: configService.get('DATABASE_USERNAME') || 'postgres',
+        password: configService.get('DATABASE_PASSWORD'),
+        database: configService.get('DATABASE_NAME'),
+        entities: ['dist/**/*.entity{.ts,.js}'],
+        synchronize: true,
+      }),
+      inject: [ConfigService],
     }),
     V1Module,
   ],
