@@ -14,6 +14,9 @@ export class ActivitiesService {
   findAll(take): Promise<Activity[]> {
     return this.activityRepository.find({
       take: take ? take : 100,
+      order: {
+        startDate: 'DESC',
+      },
     });
   }
 
