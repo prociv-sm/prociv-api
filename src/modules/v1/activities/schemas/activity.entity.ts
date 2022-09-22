@@ -5,7 +5,7 @@ export class Activity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string & { __brand: 'activityId' };
 
-  @Column({ unique: true })
+  @Column()
   title: string;
 
   @Column()
@@ -17,7 +17,7 @@ export class Activity extends BaseEntity {
   @Column({ nullable: true })
   location: string;
 
-  @Column()
+  @Column({ default: new Date() })
   startDate: Date;
 
   @Column({ nullable: true })
