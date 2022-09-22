@@ -18,13 +18,28 @@ export class AlertsController {
   }
 
   @Get('/:location/:type')
-  async findByLocationAndType(@Request() request): Promise<Alert> {
+  async findByLocationAndType(@Request() request): Promise<unknown> {
     this.logger.log(
       `Request alerts for location ${request.params.location} and type ${request.params.type}`,
     );
-    return await this.alertsService.findByLocationAndType(
+    const alert = await this.alertsService.findByLocationAndType(
       request.params.location,
       request.params.type,
     );
+    return {
+      id: alert ? alert.id : null,
+      type: alert ? alert.type : null,
+      event: alert ? alert.event : null,
+      urgency: alert ? alert.urgency : null,
+      location_code: alert ? alert.location_code : null,
+      location_desc: alert ? alert.location_desc : null,
+      severity: alert ? alert.severity : 'none',
+      identifier: alert ? alert.identifier : null,
+      certainty: alert ? alert.certainty : null,
+      onset: alert ? alert.onset : null,
+      expires: alert ? alert.expires : null,
+      received: alert ? alert.received : null,
+      active: !!alert,
+    };
   }
 }
