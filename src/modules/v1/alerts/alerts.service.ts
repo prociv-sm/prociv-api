@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { LessThanOrEqual, Repository } from 'typeorm';
 import { Alert } from './schemas/alert.entity';
 import { CreateAlertDto } from './dto/create-alert.dto';
+import * as fs from 'fs';
 
 @Injectable()
 export class AlertsService {
@@ -41,7 +42,7 @@ export class AlertsService {
     });
   }
 
-  remove(id: string): Promise<any> {
+  delete(id: string): Promise<any> {
     return this.alertRepository.delete(id);
   }
 
@@ -53,5 +54,32 @@ export class AlertsService {
       expires: LessThanOrEqual(currentDate),
     });
     this.logger.log(`Deleted ${deletedAlerts.affected} expired alerts`);
+  }
+
+  @Cron(CronExpression.EVERY_30_MINUTES)
+  async findNewAlerts() {
+    this.logger.log('Checking for new alerts');
+    fs.readFile(`./submissions/alerts.json`, 'utf8', async (err, data) => {
+      if (err) {
+        this.logger.error(err);
+        return;
+      }
+      const alerts = JSON.parse(data);
+      for (const alert of alerts) {
+        const alertExists = await this.alertRepository.findOne({
+          where: {
+            identifier: alert.identifier,
+            location_code: alert.location_code,
+            type: alert.type,
+          },
+        });
+        if (!alertExists) {
+          this.logger.log(
+            `New alert found for area: ${alert.location_code} with type: ${alert.type}`,
+          );
+          await this.create(alert);
+        }
+      }
+    });
   }
 }

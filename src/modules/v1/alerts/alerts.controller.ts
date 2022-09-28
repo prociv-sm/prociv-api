@@ -1,7 +1,19 @@
-import { Controller, Get, Logger, Request } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Logger,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AlertsService } from './alerts.service';
 import { Alert } from './schemas/alert.entity';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { CreateAlertDto } from './dto/create-alert.dto';
 
 @ApiTags('Alerts')
 @Controller()
@@ -41,5 +53,24 @@ export class AlertsController {
       received: alert ? alert.received : null,
       active: !!alert,
     };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiBody({ type: CreateAlertDto })
+  @HttpCode(HttpStatus.CREATED)
+  @ApiBearerAuth()
+  @Post()
+  async create(@Request() request): Promise<Alert> {
+    this.logger.log(`Request to create alert: ${JSON.stringify(request.body)}`);
+    return await this.alertsService.create(request.body);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiBearerAuth()
+  @Delete('/:id')
+  async delete(@Request() request): Promise<Alert> {
+    this.logger.log(`Request to delete alert: ${request.params.id}`);
+    return await this.alertsService.delete(request.params.id);
   }
 }
