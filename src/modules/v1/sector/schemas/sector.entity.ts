@@ -11,6 +11,6 @@ export class Sector extends BaseEntity {
   @Column()
   description: string;
 
-  @Column()
+  @Column({ default: new Date() })
   created_at: Date;
 }
