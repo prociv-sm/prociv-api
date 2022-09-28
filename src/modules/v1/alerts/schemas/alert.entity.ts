@@ -35,6 +35,6 @@ export class Alert extends BaseEntity {
   @Column()
   expires: Date;
 
-  @Column()
+  @Column({ default: new Date() })
   received: Date;
 }

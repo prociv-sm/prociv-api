@@ -37,4 +37,13 @@ export class ActivitiesService {
       GROUP BY type
     `);
   }
+
+  statisticsByYear(year: string): Promise<any> {
+    return this.activityRepository.query(`
+      SELECT type, COUNT(*) as count
+      FROM activity
+      WHERE EXTRACT(YEAR FROM start_date) = ${year}
+      GROUP BY type
+    `);
+  }
 }

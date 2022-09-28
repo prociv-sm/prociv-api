@@ -31,8 +31,14 @@ export class ActivitiesController {
 
   @Get('/statistics')
   async statistics(@Request() request): Promise<any> {
-    this.logger.log(`Request to get statistics`);
+    this.logger.log(`Request statistics: ${JSON.stringify(request.query)}`);
     return await this.activitiesService.statistics();
+  }
+
+  @Get('/statistics/:year')
+  async statisticsByYear(@Request() request): Promise<any> {
+    this.logger.log(`Request statistics by year: ${request.params.year}`);
+    return await this.activitiesService.statisticsByYear(request.params.year);
   }
 
   @UseGuards(JwtAuthGuard)
