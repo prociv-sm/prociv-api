@@ -33,8 +33,6 @@
     "adm-zip": "^0.5.9",
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.13.2",
-    "download-file": "^0.1.5",
-    "fetch-download": "^1.1.1",
     "fs": "^0.0.1-security",
     "got": "^12.3.0",
     "helmet": "^6.0.0",
