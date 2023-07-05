@@ -24,7 +24,7 @@ async function bootstrap() {
   SwaggerModule.setup('/docs', app, document);
 
   app.enableCors({
-    origin: '*',
+    origin: configService.get('CORS_ORIGIN') || '*',
   });
   app.use(helmet());
 
