@@ -1,6 +1,6 @@
 {
   "name": "prociv-api",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "API for the Prociv project",
   "author": "Andrea Tombolato <andreacw96@gmail.com> (https://github.com/andreacw5)",
   "private": true,
@@ -33,7 +33,7 @@
     "adm-zip": "^0.5.9",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
-    "class-validator": "^0.13.2",
+    "class-validator": "0.14.0",
     "fs": "^0.0.2",
     "got": "^12.4.1",
     "helmet": "^6.0.0",
