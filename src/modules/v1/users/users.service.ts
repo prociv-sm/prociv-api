@@ -11,7 +11,17 @@ export class UsersService {
   ) {}
 
   findAll(): Promise<UserEntity[]> {
-    return this.userEntityRepository.find();
+    return this.userEntityRepository.find({
+      select: [
+        'id',
+        'username',
+        'email',
+        'internal',
+        'name',
+        'surname',
+        'verified',
+      ],
+    });
   }
 
   async findByUsername(username: string): Promise<any> {
