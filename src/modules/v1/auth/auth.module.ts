@@ -6,17 +6,22 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { AuthController } from './auth.controller';
+import { TwoFactorAuthService } from './twoFactor/twoFactorAuth.service';
+import { JwtRefreshTokenStrategy } from './strategies/jwt-refresh-token.strategy';
+import { JwtTwoFactorStrategy } from './strategies/jwt-two-factor.strategy';
+import { TwoFactorAuthController } from './twoFactor/twoFactorAuth.controller';
 
 @Module({
-  imports: [
-    UsersModule,
-    PassportModule,
-    JwtModule.register({
-      secret: 'secret',
-      signOptions: { expiresIn: '7d' },
-    }),
+  imports: [UsersModule, PassportModule, JwtModule.register({})],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+    JwtRefreshTokenStrategy,
+    JwtTwoFactorStrategy,
+    TwoFactorAuthService,
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
-  controllers: [AuthController],
+  controllers: [AuthController, TwoFactorAuthController],
+  exports: [AuthService],
 })
 export class AuthModule {}

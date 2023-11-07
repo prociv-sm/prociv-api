@@ -5,9 +5,15 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger } from '@nestjs/common';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import helmet from 'helmet';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
-  const appOptions = { cors: true };
+  const appOptions = {
+    cors: {
+      origin: process.env.CLIENT_URL || 'http://localhost:3000',
+      credentials: true,
+    },
+  };
   const app = await NestFactory.create(AppModule, appOptions);
 
   app.useGlobalFilters(new HttpExceptionFilter());
@@ -23,9 +29,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('/docs', app, document);
 
-  app.enableCors({
-    origin: '*',
-  });
+  app.use(cookieParser());
   app.use(helmet());
 
   const appPort = configService.get('APP_PORT') || 8080;

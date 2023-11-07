@@ -1,13 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { UsersService } from '../../users/users.service';
-import TokenPayload from '../interfaces/tokenPayload.interface';
+import { PassportStrategy } from '@nestjs/passport';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
+import { UsersService } from '../../users/users.service';
+import TokenPayload from '../interfaces/tokenPayload.interface';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtTwoFactorStrategy extends PassportStrategy(
+  Strategy,
+  'jwt-two-factor',
+) {
   constructor(
     private readonly configService: ConfigService,
     private readonly userService: UsersService,
@@ -23,6 +26,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: TokenPayload) {
-    return this.userService.findOne(payload.userId);
+    const user = await this.userService.findOne(payload.userId);
+    if (!user.twoFactorEnabled) {
+      return user;
+    }
+    if (payload.isTwoFactor) {
+      return user;
+    }
   }
 }

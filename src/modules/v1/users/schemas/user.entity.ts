@@ -28,6 +28,9 @@ export default class UserEntity {
   @Expose({ groups: ['admin'] })
   readonly email: string = '';
 
+  @Column({ default: false })
+  public confirmedEmail: boolean;
+
   @Column()
   @Index({ unique: true })
   username: string;
@@ -35,4 +38,18 @@ export default class UserEntity {
   @ApiProperty({ type: Boolean })
   @Column()
   readonly verified: boolean = false;
+
+  @Column({
+    nullable: true,
+  })
+  @Exclude()
+  public refreshToken?: string;
+
+  @Column()
+  @ApiProperty({ type: Boolean })
+  public twoFactorEnabled: boolean = false;
+
+  @Column({ nullable: true })
+  @ApiProperty({ type: String })
+  public twoFactorSecret?: string;
 }
