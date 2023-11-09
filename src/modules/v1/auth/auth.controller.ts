@@ -110,6 +110,7 @@ export class AuthController {
       surname: request.user.surname,
       internal: request.user.internal,
       twoFactorEnabled: request.user.twoFactorEnabled,
+      roles: request.user.roles,
     };
   }
 
