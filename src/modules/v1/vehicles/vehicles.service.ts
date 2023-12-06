@@ -10,7 +10,7 @@ export class VehiclesService {
     private vehicleRepository: Repository<Vehicle>,
   ) {}
 
-  findAll(type): Promise<Vehicle[]> {
+  findAll(type: string): Promise<Vehicle[]> {
     return this.vehicleRepository.find({
       where: {
         type: type,
