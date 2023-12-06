@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
 import Role from '../enums/role.enum';
+import Course from "../enums/course.enum";
 
 @Entity('users')
 export default class UserEntity {
@@ -26,6 +27,15 @@ export default class UserEntity {
   })
   @ApiProperty({ type: [String] })
   public roles: Role[];
+
+  @Column({
+    type: 'enum',
+    enum: Course,
+    array: true,
+    default: [Course.Basic],
+  })
+  @ApiProperty({ type: [String] })
+  public courses: Course[];
 
   @ApiProperty({ type: String, maxLength: 64 })
   @Column({ length: 64 })

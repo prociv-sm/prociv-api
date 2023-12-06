@@ -80,6 +80,7 @@ export class AuthController {
       verified: user.verified,
       name: user.name,
       surname: user.surname,
+      initials: user.name[0] + user.surname[0],
       internal: user.internal,
       twoFactorEnabled: user.twoFactorEnabled,
     };
@@ -109,6 +110,7 @@ export class AuthController {
       name: request.user.name,
       surname: request.user.surname,
       internal: request.user.internal,
+      initials: request.user.name[0] + request.user.surname[0],
       twoFactorEnabled: request.user.twoFactorEnabled,
       roles: request.user.roles,
     };

@@ -16,12 +16,12 @@ export class UsersService {
     return this.userEntityRepository.find({
       select: [
         'id',
-        'username',
-        'email',
         'internal',
         'name',
         'surname',
         'verified',
+        'roles',
+        'courses',
       ],
     });
   }
