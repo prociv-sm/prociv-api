@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { LessThanOrEqual, Repository } from 'typeorm';
 import { Alert } from './schemas/alert.entity';
 import { CreateAlertDto } from './dto/create-alert.dto';
-import * as fs from 'fs';
+import { UpdateAlertDto } from "./dto/update-alert.dto";
 
 @Injectable()
 export class AlertsService {
@@ -56,7 +56,7 @@ export class AlertsService {
     });
   }
 
-  update(id: string, data: CreateAlertDto): Promise<any> {
+  update(id: string, data: UpdateAlertDto): Promise<any> {
     return this.alertRepository.update(id, data);
   }
 

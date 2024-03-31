@@ -4,9 +4,9 @@ import { Queue } from 'bull';
 
 @Injectable()
 export class AlertsProducerService {
-  constructor(@InjectQueue('alerts-queue') private queue: Queue) {}
+  constructor(@InjectQueue('alerts') private queue: Queue) {}
 
   async sendMessage(message: object) {
-    await this.queue.add('alerts-job', message);
+    await this.queue.add('alerts', message);
   }
 }

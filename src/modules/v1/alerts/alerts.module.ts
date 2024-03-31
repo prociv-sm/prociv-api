@@ -12,7 +12,7 @@ import { BullModule } from '@nestjs/bull';
   imports: [
     ScheduleModule.forRoot(),
     BullModule.registerQueue({
-      name: 'alerts-queue',
+      name: 'alerts',
       defaultJobOptions: {
         removeOnComplete: true,
       },
