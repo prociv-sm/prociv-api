@@ -1,6 +1,6 @@
 {
   "name": "prociv-api",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "API for the Prociv project",
   "author": "Andrea Tombolato <andreacw96@gmail.com> (https://github.com/andreacw5)",
   "private": true,
