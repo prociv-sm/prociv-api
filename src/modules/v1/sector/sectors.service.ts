@@ -20,7 +20,7 @@ export class SectorsService {
   async createOrUpdate(data: CreateSectorDto): Promise<Sector> {
     const sector = await this.findOne(data.code);
     if (sector) {
-      this.logger.log(
+      this.logger.debug(
         `Sector already exists with code ${sector.code}, updating with new data`,
       );
       await this.update(sector.code, {

@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { LessThanOrEqual, Repository } from 'typeorm';
 import { Alert } from './schemas/alert.entity';
 import { CreateAlertDto } from './dto/create-alert.dto';
-import { UpdateAlertDto } from "./dto/update-alert.dto";
+import { UpdateAlertDto } from './dto/update-alert.dto';
 
 @Injectable()
 export class AlertsService {
