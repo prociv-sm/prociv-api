@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { LessThanOrEqual, Repository } from 'typeorm';
 import { Alert } from './schemas/alert.entity';
 import { CreateAlertDto } from './dto/create-alert.dto';
-import * as fs from 'fs';
+import { UpdateAlertDto } from './dto/update-alert.dto';
 
 @Injectable()
 export class AlertsService {
@@ -33,6 +33,20 @@ export class AlertsService {
     });
   }
 
+  findByLocationIdentifierAndType(
+    location: string,
+    identifier: string,
+    type: string,
+  ): Promise<Alert | null> {
+    return this.alertRepository.findOne({
+      where: {
+        location_code: location,
+        identifier: identifier,
+        type: type,
+      },
+    });
+  }
+
   findByLocationAndType(location: string, type: string): Promise<Alert | null> {
     return this.alertRepository.findOne({
       where: {
@@ -42,8 +56,16 @@ export class AlertsService {
     });
   }
 
+  update(id: string, data: UpdateAlertDto): Promise<any> {
+    return this.alertRepository.update(id, data);
+  }
+
   delete(id: string): Promise<any> {
     return this.alertRepository.delete(id);
+  }
+
+  deleteAll(): Promise<any> {
+    return this.alertRepository.clear();
   }
 
   @Cron(CronExpression.EVERY_30_MINUTES)
@@ -54,32 +76,5 @@ export class AlertsService {
       expires: LessThanOrEqual(currentDate),
     });
     this.logger.log(`Deleted ${deletedAlerts.affected} expired alerts`);
-  }
-
-  @Cron(CronExpression.EVERY_30_MINUTES)
-  async findNewAlerts() {
-    this.logger.log('Checking for new alerts');
-    fs.readFile(`./submissions/alerts.json`, 'utf8', async (err, data) => {
-      if (err) {
-        this.logger.error(err);
-        return;
-      }
-      const alerts = JSON.parse(data);
-      for (const alert of alerts) {
-        const alertExists = await this.alertRepository.findOne({
-          where: {
-            identifier: alert.identifier,
-            location_code: alert.location_code,
-            type: alert.type,
-          },
-        });
-        if (!alertExists) {
-          this.logger.log(
-            `New alert found for area: ${alert.location_code} with type: ${alert.type}`,
-          );
-          await this.create(alert);
-        }
-      }
-    });
   }
 }
