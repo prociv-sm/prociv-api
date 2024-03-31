@@ -23,7 +23,7 @@ export class Alert extends BaseEntity {
   @Column()
   identifier: string;
 
-  @Column()
+  @Column({ unique: true })
   location_code: string;
 
   @Column()
