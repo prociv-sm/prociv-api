@@ -1,4 +1,4 @@
-FROM node:16-alpine as builder
+FROM node:20.11.1-alpine AS base
 
 ENV NODE_ENV build
 
@@ -10,12 +10,14 @@ COPY package.json yarn.lock ./
 
 RUN yarn install --frozen-lockfile
 
+# Bundle app source
 COPY . .
 
 RUN yarn build
 
-FROM node:16-alpine
+FROM base as prod-build
 
+# Set the NODE_ENV to production
 ENV NODE_ENV production
 
 # Create app directory
@@ -26,7 +28,8 @@ COPY package.json yarn.lock ./
 
 RUN yarn install --production --frozen-lockfile
 
-COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=base /usr/src/app/dist ./dist
 
+# Start the server using the production build
 CMD [ "node", "dist/main.js" ]
 
