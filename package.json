@@ -1,6 +1,6 @@
 {
   "name": "prociv-api",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "API for the Prociv project",
   "author": "Andrea Tombolato <andreacw96@gmail.com> (https://github.com/andreacw5)",
   "private": true,
@@ -74,7 +74,8 @@
     "typescript": "^5.4.3"
   },
   "resolutions": {
-    "string-width": "4.2.3"
+    "string-width": "4.2.3",
+    "@types/mime": "3.0.4"
   },
   "jest": {
     "moduleFileExtensions": [
