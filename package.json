@@ -1,6 +1,6 @@
 {
   "name": "prociv-api",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "API for the Prociv project",
   "author": "Andrea Tombolato <andreacw96@gmail.com> (https://github.com/andreacw5)",
   "private": true,
@@ -72,6 +72,9 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "4.2.0",
     "typescript": "^5.4.3"
+  },
+  "resolutions": {
+    "string-width": "4.2.3"
   },
   "jest": {
     "moduleFileExtensions": [
