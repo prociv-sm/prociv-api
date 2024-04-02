@@ -7,7 +7,6 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { AlertsConsumer } from './alerts.consumer';
 import { AlertsProducerService } from './alerts.producer.service';
 import { BullModule } from '@nestjs/bull';
-import { SectorsModule } from '../sector/sectors.module';
 
 @Module({
   imports: [
@@ -19,7 +18,6 @@ import { SectorsModule } from '../sector/sectors.module';
       },
     }),
     TypeOrmModule.forFeature([Alert]),
-    SectorsModule,
   ],
   providers: [AlertsService, AlertsConsumer, AlertsProducerService],
   controllers: [AlertsController],

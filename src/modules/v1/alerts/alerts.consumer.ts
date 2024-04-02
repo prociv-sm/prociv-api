@@ -3,14 +3,10 @@ import { Job } from 'bull';
 import { Alert } from './schemas/alert.entity';
 import { AlertsService } from './alerts.service';
 import { Logger } from '@nestjs/common';
-import { SectorsService } from "../sector/sectors.service";
 
 @Processor('alerts')
 export class AlertsConsumer {
-  constructor(
-    private readonly alertsService: AlertsService,
-    private readonly sectorService: SectorsService,
-  ) {}
+  constructor(private readonly alertsService: AlertsService) {}
 
   private readonly logger = new Logger(AlertsConsumer.name);
 
@@ -18,11 +14,6 @@ export class AlertsConsumer {
   async createNewAlerts(job: Job<Alert>) {
     const { data } = job;
     this.logger.log(`Incoming on alerts queue: ${JSON.stringify(data)}`);
-    // Create or update sector
-    await this.sectorService.createOrUpdate({
-      code: data.location_code,
-      description: data.location_desc,
-    });
     // Find if alert already exists
     const alert = await this.alertsService.findByLocationIdentifierAndType(
       data.location_code,
