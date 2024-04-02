@@ -15,11 +15,16 @@ import { BullModule } from '@nestjs/bull';
       name: 'alerts',
       defaultJobOptions: {
         removeOnComplete: true,
+        attempts: 3,
+        backoff: {
+          type: 'exponential',
+          delay: 1000,
+        },
       },
     }),
     TypeOrmModule.forFeature([Alert]),
   ],
-  providers: [AlertsService, AlertsConsumer, AlertsProducerService],
   controllers: [AlertsController],
+  providers: [AlertsService, AlertsConsumer, AlertsProducerService],
 })
 export class AlertsModule {}

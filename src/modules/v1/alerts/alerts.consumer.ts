@@ -1,4 +1,9 @@
-import { Process, Processor } from '@nestjs/bull';
+import {
+  OnQueueCompleted,
+  OnQueueError,
+  Process,
+  Processor,
+} from '@nestjs/bull';
 import { Job } from 'bull';
 import { Alert } from './schemas/alert.entity';
 import { AlertsService } from './alerts.service';
@@ -10,6 +15,10 @@ export class AlertsConsumer {
 
   private readonly logger = new Logger(AlertsConsumer.name);
 
+  /**
+   * Process incoming job to create or update alert
+   * @param job
+   */
   @Process()
   async createNewAlerts(job: Job<Alert>) {
     const { data } = job;
@@ -41,5 +50,24 @@ export class AlertsConsumer {
       `Creating a new alert for location ${data.location_code} and type ${data.type}`,
     );
     await this.alertsService.create(data);
+  }
+
+  /**
+   * Log when job is completed
+   * @param job
+   */
+  @OnQueueCompleted()
+  onCompleted(job: Job) {
+    this.logger.debug(`Processing alert job completed: ${job.returnvalue}`);
+  }
+
+  /**
+   * Log when job fails
+   * @param job
+   * @param error
+   */
+  @OnQueueError()
+  onError(job: Job, error: Error) {
+    this.logger.error(`Processing alert job failed: ${error.message}`);
   }
 }
