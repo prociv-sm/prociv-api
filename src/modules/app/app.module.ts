@@ -24,6 +24,14 @@ import { BullModule } from '@nestjs/bull';
           username: configService.get('REDIS_USERNAME'),
           password: configService.get('REDIS_PASSWORD'),
         },
+        defaultJobOptions: {
+          removeOnComplete: true,
+          attempts: 3,
+          backoff: {
+            type: 'exponential',
+            delay: 1000,
+          },
+        },
       }),
       inject: [ConfigService],
     }),

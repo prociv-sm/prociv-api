@@ -7,7 +7,6 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { AlertsConsumer } from './alerts.consumer';
 import { AlertsProducerService } from './alerts.producer.service';
 import { BullModule } from '@nestjs/bull';
-import { SectorsModule } from '../sector/sectors.module';
 
 @Module({
   imports: [
@@ -16,12 +15,16 @@ import { SectorsModule } from '../sector/sectors.module';
       name: 'alerts',
       defaultJobOptions: {
         removeOnComplete: true,
+        attempts: 3,
+        backoff: {
+          type: 'exponential',
+          delay: 1000,
+        },
       },
     }),
     TypeOrmModule.forFeature([Alert]),
-    SectorsModule,
   ],
-  providers: [AlertsService, AlertsConsumer, AlertsProducerService],
   controllers: [AlertsController],
+  providers: [AlertsService, AlertsConsumer, AlertsProducerService],
 })
 export class AlertsModule {}
