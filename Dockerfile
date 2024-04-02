@@ -19,6 +19,7 @@ FROM base as prod-build
 
 # Set the NODE_ENV to production
 ENV NODE_ENV production
+ENV TZ Europe/Rome
 
 # Create app directory
 WORKDIR /usr/src/app
