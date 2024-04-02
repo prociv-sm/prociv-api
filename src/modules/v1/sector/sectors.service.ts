@@ -13,18 +13,42 @@ export class SectorsService {
   ) {}
   private readonly logger = new Logger(SectorsService.name);
 
+  /**
+   * Find all sectors
+   */
   findAll(): Promise<Sector[]> {
     return this.sectorsRepository.find();
   }
 
+  /**
+   * Find one sector by code
+   * @param {String} code
+   */
   findOne(code: string): Promise<Sector> {
     return this.sectorsRepository.findOneBy({ code });
   }
 
+  /**
+   * Update sector by code
+   * @param {String} code
+   * @param data
+   */
   async update(code: string, data: UpdateSectorDto): Promise<any> {
     return this.sectorsRepository.update(code, data);
   }
 
+  /**
+   * Upsert sector
+   * @param data
+   */
+  async upsert(data: Sector): Promise<void> {
+    await this.sectorsRepository.upsert([data], ['code']);
+  }
+
+  /**
+   * Create a new sector
+   * @param data
+   */
   async create(data: CreateSectorDto): Promise<Sector> {
     const sector = this.sectorsRepository.create(data);
     await this.sectorsRepository.save(data);
