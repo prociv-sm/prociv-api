@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/prociv-sm/management-api" target="blank"><img src="app_logo.png" width="500" alt="File Harbor App Logo" /></a>
+  <a href="https://github.com/prociv-sm/management-api" target="blank"><img src="app_logo.png" width="500" alt="ProCiv API Logo" /></a>
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
@@ -50,17 +50,10 @@ Contributions are welcome! If you want to contribute to this project, please fol
 | code                | description         | default value |
 |---------------------|---------------------|---------------|
 | APP_PORT            | App port            | 8080          |
-| DATABASE_HOST       | Database Host       | localhost     |
-| DATABASE_PORT       | Database Port       | 5432          |
-| DATABASE_NAME       | Database Name       | prociv        |
-| DATABASE_USERNAME   | Database Username   |               |
-| DATABASE_PASSWORD   | Database Password   |               |
+| DATABASE_URL        | Database Url        |               |
 | JWT_SECRET          | JWT Secret          |               |
 | JWT_EXPIRATION_TIME | JWT Expiration time |               |
-| REDIS_HOST          | Redis Host          |               |
-| REDIS_PORT          | Redis Port          | 6385          |
-| REDIS_USERNAME      | Redis Username      | default       |
-| REDIS_PASSWORD      | Redis Password      |               |
+| ALERT_API_URL       | AlertConnect Url    |               |
 
 ## Versioning
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/andreacw5/url-manager-app/releases).

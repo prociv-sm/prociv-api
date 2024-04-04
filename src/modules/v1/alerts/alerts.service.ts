@@ -1,80 +1,44 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
-import { InjectRepository } from '@nestjs/typeorm';
-import { LessThanOrEqual, Repository } from 'typeorm';
-import { Alert } from './schemas/alert.entity';
-import { CreateAlertDto } from './dto/create-alert.dto';
-import { UpdateAlertDto } from './dto/update-alert.dto';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
+import { ConfigService } from '@nestjs/config';
+import { catchError, firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class AlertsService {
-  private readonly logger = new Logger(AlertsService.name);
-
   constructor(
-    @InjectRepository(Alert)
-    private alertRepository: Repository<Alert>,
+    private readonly configService: ConfigService,
+    private readonly httpService: HttpService,
   ) {}
 
-  findAll(): Promise<Alert[]> {
-    return this.alertRepository.find();
-  }
+  private readonly logger = new Logger(AlertsService.name);
 
-  async create(data: CreateAlertDto): Promise<Alert> {
-    const alert = this.alertRepository.create(data);
-    await this.alertRepository.save(data);
-    return alert;
-  }
+  async findByLocationAndType(location: string, type: string) {
+    const API_URL =
+      this.configService.get('alert.apiUrl') +
+      '/alerts/' +
+      location +
+      '/' +
+      type;
+    this.logger.debug('Fetching alerts from ' + API_URL);
 
-  findByLocation(location: string): Promise<Alert[]> {
-    return this.alertRepository.find({
-      where: {
-        location_code: location,
-      },
-    });
-  }
+    const { data } = await firstValueFrom(
+      this.httpService.get(API_URL).pipe(
+        catchError((error) => {
+          if (error?.response?.data.code === 404) {
+            throw new NotFoundException(
+              `No alerts found for location ${location} and type ${type}`,
+            );
+          }
+          throw `An error happened. Msg: ${JSON.stringify(
+            error?.response?.data,
+          )}`;
+        }),
+      ),
+    );
 
-  findByLocationIdentifierAndType(
-    location: string,
-    identifier: string,
-    type: string,
-  ): Promise<Alert | null> {
-    return this.alertRepository.findOne({
-      where: {
-        location_code: location,
-        identifier: identifier,
-        type: type,
-      },
-    });
-  }
-
-  findByLocationAndType(location: string, type: string): Promise<Alert | null> {
-    return this.alertRepository.findOne({
-      where: {
-        location_code: location,
-        type: type,
-      },
-    });
-  }
-
-  update(id: string, data: UpdateAlertDto): Promise<any> {
-    return this.alertRepository.update(id, data);
-  }
-
-  delete(id: string): Promise<any> {
-    return this.alertRepository.delete(id);
-  }
-
-  deleteAll(): Promise<any> {
-    return this.alertRepository.clear();
-  }
-
-  @Cron(CronExpression.EVERY_30_MINUTES)
-  async removeExpiredAlerts() {
-    this.logger.log('Removing all expired alerts');
-    const currentDate = new Date();
-    const deletedAlerts = await this.alertRepository.delete({
-      expires: LessThanOrEqual(currentDate),
-    });
-    this.logger.log(`Deleted ${deletedAlerts.affected} expired alerts`);
+    return {
+      ...data,
+      isActive: data.expires > new Date().toISOString(),
+    };
   }
 }
