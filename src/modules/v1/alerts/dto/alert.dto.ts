@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateAlertDto {
+export class AlertDto {
+  @ApiProperty({
+    description: 'The id of the alerts',
+    example: 'uuu-123-abc-456',
+  })
+  id: string;
+
   @ApiProperty({
     description: 'The type of the alerts',
     example: 'storm',
