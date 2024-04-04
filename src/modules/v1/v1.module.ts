@@ -7,6 +7,7 @@ import { ActivitiesModule } from './activities/activities.module';
 import { SquadsModule } from './squads/squads.module';
 import { VehiclesModule } from './vehicles/vehicles.module';
 import { AlertsModule } from './alerts/alerts.module';
+import { HealthModule } from './health/health.module';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
       { path: '/activities', module: ActivitiesModule },
       { path: '/squads', module: SquadsModule },
       { path: '/vehicles', module: VehiclesModule },
+      { path: '/health', module: HealthModule },
     ],
   },
 ];
@@ -31,6 +33,7 @@ const routes: Routes = [
     SquadsModule,
     VehiclesModule,
     AlertsModule,
+    HealthModule,
   ],
 })
 export default class V1Module {}
