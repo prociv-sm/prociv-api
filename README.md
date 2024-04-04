@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/prociv-sm/management-api" target="blank"><img src="app_logo.png" width="500" alt="File Harbor App Logo" /></a>
+  <a href="https://github.com/prociv-sm/management-api" target="blank"><img src="app_logo.png" width="500" alt="ProCiv API Logo" /></a>
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
