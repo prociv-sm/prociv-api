@@ -16,11 +16,7 @@ import { RolesGuard } from '../v1/roles/guards/roles.guard';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         type: 'postgres',
-        host: configService.get('DATABASE_HOST'),
-        port: configService.get('DATABASE_PORT'),
-        username: configService.get('DATABASE_USERNAME'),
-        password: configService.get('DATABASE_PASSWORD'),
-        database: configService.get('DATABASE_NAME'),
+        url: configService.get('DATABASE_URL'),
         entities: ['dist/**/*.entity{.ts,.js}'],
         synchronize: true,
       }),

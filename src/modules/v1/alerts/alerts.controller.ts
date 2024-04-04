@@ -8,6 +8,11 @@ export class AlertsController {
   constructor(private readonly alertsService: AlertsService) {}
 
   private readonly logger = new Logger(AlertsController.name);
+
+  /**
+   * Get all alerts
+   * @param request
+   */
   @Get('/:location/:type')
   async findByLocationAndType(@Request() request) {
     this.logger.log(

@@ -47,17 +47,13 @@ Contributions are welcome! If you want to contribute to this project, please fol
 - Create a new Pull Request.
 
 ## Environment Variables
-| code                | description          | default value |
-|---------------------|----------------------|---------------|
-| APP_PORT            | App port             | 8080          |
-| DATABASE_HOST       | Database Host        | localhost     |
-| DATABASE_PORT       | Database Port        | 5432          |
-| DATABASE_NAME       | Database Name        | prociv        |
-| DATABASE_USERNAME   | Database Username    |               |
-| DATABASE_PASSWORD   | Database Password    |               |
-| JWT_SECRET          | JWT Secret           |               |
-| JWT_EXPIRATION_TIME | JWT Expiration time  |               |
-| ALERT_API_KEY       | AlertConnect Api Key |               |
+| code                | description         | default value |
+|---------------------|---------------------|---------------|
+| APP_PORT            | App port            | 8080          |
+| DATABASE_URL        | Database Url        |               |
+| JWT_SECRET          | JWT Secret          |               |
+| JWT_EXPIRATION_TIME | JWT Expiration time |               |
+| ALERT_API_URL       | AlertConnect Url    |               |
 
 ## Versioning
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/andreacw5/url-manager-app/releases).

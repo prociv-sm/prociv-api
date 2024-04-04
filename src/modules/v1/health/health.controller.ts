@@ -14,6 +14,9 @@ export class HealthController {
     private db: TypeOrmHealthIndicator,
   ) {}
 
+  /**
+   * Check the health of the application
+   */
   @Get()
   @HealthCheck()
   check() {
