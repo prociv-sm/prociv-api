@@ -1,13 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { configValidationSchema } from '../../configs/config.schema';
+import config from '../../configs/config.schema';
+import { configValidationSchema } from '../../configs/config.validation';
 import V1Module from '../v1/v1.module';
 import { RolesGuard } from '../v1/roles/guards/roles.guard';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
+      load: [config],
       isGlobal: true,
       cache: true,
       validationSchema: configValidationSchema,
