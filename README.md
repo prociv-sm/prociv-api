@@ -53,7 +53,6 @@ Contributions are welcome! If you want to contribute to this project, please fol
 | DATABASE_URL        | Database Url        |               |
 | JWT_SECRET          | JWT Secret          |               |
 | JWT_EXPIRATION_TIME | JWT Expiration time |               |
-| ALERT_API_URL       | AlertConnect Url    |               |
 
 ## Versioning
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/andreacw5/url-manager-app/releases).

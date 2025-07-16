@@ -6,5 +6,4 @@ export const configValidationSchema = Joi.object({
   JWT_SECRET: Joi.string().required(),
   JWT_EXPIRATION_TIME: Joi.string().default('1d').required(),
   CORS_ORIGIN: Joi.string().default('*'),
-  ALERT_API_URL: Joi.string().required(),
 });
