@@ -16,8 +16,9 @@ async function bootstrap() {
   // Swagger setup
   const options = new DocumentBuilder()
     .setTitle('PCSM - Alert and Management API')
-    .setDescription('API for the management of alerts and internal operations')
-    .setVersion('1.0')
+    .setDescription('API documentation for the PCSM Alert and Management system')
+    .setVersion(process?.env?.npm_package_version || '1.0.0')
+    .setContact('Andrea Tombolato', 'https://heyatom.dev', 'hey@heyatom.dev')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('/docs', app, document);
