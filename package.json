@@ -1,6 +1,6 @@
 {
-  "name": "prociv-api",
-  "version": "1.5.1",
+  "name": "pcsm-api",
+  "version": "1.5.2",
   "description": "API for the protezione civile di settimo milanese",
   "author": "Andrea Tombolato <hey@heyatom.dev> (https://heyatom.dev)",
   "private": true,
@@ -33,6 +33,7 @@
     "@nestjs/terminus": "^10.3.0",
     "@nestjs/typeorm": "^10.0.2",
     "@types/bcryptjs": "^2.4.6",
+    "@willsoto/nestjs-prometheus": "^6.0.2",
     "axios": "^1.10.0",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
